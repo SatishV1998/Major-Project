@@ -50,7 +50,7 @@ channel.pDecoding = 1
 
 // run the simulation forever
 simulate {
-  node '1', location: [ 225.m, 750.m, -200.m], web: 8081, api: 1101, stack: "$home/etc/setup"
+  node '1', location: [ 0.m, 0.m, 0.m], web: 8081, api: 1101, stack: "$home/etc/setup"
   node '2', location: [ 0.m,   600.m, -200.m], web: 8082, api: 1102, stack: "$home/etc/setup"
   node '3', location: [ 175.m, 500.m, -50.m], web: 8083, api: 1103, stack: "$home/etc/setup"
   node '4', location: [ 400.m, 550.m, -500.m], web: 8084, api: 1104, stack: "$home/etc/setup"
