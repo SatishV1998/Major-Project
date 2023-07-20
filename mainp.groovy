@@ -38,11 +38,7 @@ class ClusteringAgent extends UnetAgent {
 
 
     double hcalc(int n, double T_t, double T_proc) {
-    double temp = 0
-    for (int p = 1; p <= n; p++) {
-        temp += ((p - 1) * T_t) + p * T_proc
-    }
-    return temp
+      return (r + ds + dr) / v + T_t  + T_proc +T_r
    }
 
     LinkedHashMap nodeval = [];
@@ -76,23 +72,12 @@ class ClusteringAgent extends UnetAgent {
           fsum[i] = fsum[i] + entry.value[i]
         }
       }
-
-      //println( 'nodeval after step 1: summing topsis: ' + nodeval )
-
       //1.2 Divide the values in each column with their respective sum
       for (entry in info) {
         for (int i = 0; i < Nf; i++) {
-
-          //System.out.println( 'attribute value =' + (float)info[entry.key][i] + '/' + ' fsum[i] = ' + fsum[i] )
-
           info[entry.key][i] = ((float) info[entry.key][i]) / fsum[i]
-
-          //System.out.println( 'norm value' + info[entry.key][i] )
-
         }
       }
-
-      //System.out.println(Arrays.toString(fsum))
 
       // Step-2 To calculate weights using entropy formula
 
@@ -105,17 +90,10 @@ class ClusteringAgent extends UnetAgent {
         entropy[i] = (-1 * entropy[i]) / Math.log(info.size())
       }
 
-      //System.out.println('entropy : ' + Arrays.toString(entropy))
-
-      // 2.2  Calculate Weights from the respective entropies 
-
       for (int j = 0; j < Nf; j++) {
         weights[j] = (1 - entropy[j]) / (Nf - entropy.sum())
       }
 
-      // Step-2 ends
-
-      // 1. System.out.println('Weights : ' + Arrays.toString(weights))
 
       // Step-3 : Mutiply the attribute values with their respective weights
 
@@ -125,7 +103,6 @@ class ClusteringAgent extends UnetAgent {
         }
       }
 
-      //Step-3 ends
 
       // Step-4 : Find the best and the worst alternative
 
