@@ -5,17 +5,12 @@ import org.arl.unet.*
 
   class attribute extends UnetAgent {
 
-  enum Params implements Parameter {        
-    delay , info
-  }
 
   final String title = 'Attribute request agent'        
  
 
-  int delay = 0;   
-  LinkedHashMap info = []
-  int ea = 100;
-  int E0=100;
+  int ea =100;
+  int Eb=100;
 
 
   @Override
@@ -60,21 +55,20 @@ import org.arl.unet.*
      
      distance = distance / 1000
      int N0 = 1 // noise power density
-     int k = 1.5 //spreading factor
-     int af = 3 // absorption coefficient for frequency f = 18KHZ
+     int k = 0.75 //spreading factor
+     int af = 2.25 // absorption coefficient
 
      
-     int d = Math.random()*5000; //delay
+     int d = Math.random()*6000; //delay
      
      int depth= -1*node.location[2];
      int x = node.location[0];
      int y = node.location[1];
      float dp = depth/1000
 
-     int Eb=E0  * Math.exp(-af*dp)
+     Eb= 1.5 * Eb *  Math.exp(-af*dp)
+     ea= ea * Math.exp(-(0.125) * (dp))
      
-     
-     ea=ea * Math.exp(-(0.135) * (dp))
      lq = Eb / ( N0 * Math.pow( distance , k ) * Math.pow( af , distance ) ) 
     
       
@@ -102,8 +96,5 @@ import org.arl.unet.*
     
   }
 
-  List<Parameter> getParameterList() {      
-    allOf(Params)
-  }
 
 }
